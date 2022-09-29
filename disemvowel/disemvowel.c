@@ -5,36 +5,41 @@
 #include "disemvowel.h"
 
 
-int vowelCounter(char const *str){
-        int i, numVowels;
-        for(i=0; i<strlen(str); ++i){
-                if(strcasecmp(str[i], 'a') == 0  || strcasecmp(str[i], 'e') == 0  || strcasecmp(str[i], 'i') == 0  || strcasecmp(str[i], 'o') == 0  || strcasecmp(str[i], 'u') == 0){
+int vowelCounter(char *str){
+        int i, numVowels=0;
+	char *vowels = (char*)calloc(11, sizeof(char));
+  strcpy(vowels, "aeiouAEIOU\0");
+  int len = strlen(str);
+        for(i=0; i<len; ++i){
+                if(strchr(vowels, str[i]) != NULL){
                         ++numVowels;
                 }
         }
-
+free(vowels);
 return numVowels;
 
 }
 
 
 
-char *disemvowel(char const *str) {
-  int len,numVowels,i,x;
+char *disemvowel(char *str) {
+  int len,vow,i,x=0;
   char *result;
-
-  numVowels = vowelCounter(str);
+  char *vowels = (char*)calloc(11, sizeof(char));
+  strcpy(vowels, "aeiouAEIOU\0");
+ 
+  vow = vowelCounter(str);
   len = strlen(str);
-  result = (char*) calloc(len+1-numVowels, sizeof(char));
+  result = (char*) calloc(len+1-vow, sizeof(char));
 
 
   for (i=0; i<len; ++i) {
-	if(strcasecmp(str[i], 'a') != 0 || strcasecmp(str[i], 'e') != 0 || strcasecmp(str[i], 'i') != 0  || strcasecmp(str[i], 'o') != 0  || strcasecmp(str[i], 'u') != 0){
+	if(strchr(vowels, str[i]) == NULL ){
 			result[x] = str[i];
 			++x;
 	}
   }
-
-
+  result[len-vow] = '\0';
+  free(vowels);
 	return result;
 }

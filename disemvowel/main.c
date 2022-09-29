@@ -9,8 +9,11 @@ int main(int argc, char *argv[]) {
   
   size = 100;
   line = (char*) malloc (size + 1);
+  char *wrd;
 
   while (getline(&line, &size, stdin) > 0) {
-    printf("%s\n", disemvowel(line));
+    printf("%s\n", wrd = disemvowel(line));
+  
+  	free(wrd);
   }
 }
